@@ -19,22 +19,25 @@
       background: url('imagem-fundo.jpg') no-repeat center center / cover;
     }
 
-    /* Vídeo de fundo que roda uma vez e congela */
+    /* Vídeo de fundo: desktop centralizado menor */
     .background-video {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      object-fit: cover;
-      background-color: #000;
+      top: 50%;
+      left: 50%;
+      width: 60vw;
+      height: 60vh;
+      transform: translate(-50%, -50%);
+      object-fit: contain;
+      background-color: transparent;
       z-index: -1;
     }
 
-    /* Container dos botões */
+    /* Container dos botões um pouco mais para baixo, justificado */
     .buttons-container {
       position: fixed;
       top: 65%;
       left: 50%;
-      transform: translate(-50%, -60%);
+      transform: translate(-50%, -65%);
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -42,12 +45,7 @@
       background-color: rgba(0,0,0,0.6);
       padding: 20px;
       border-radius: 16px;
-      /* alinhamento justificado: estica cada botão para a largura máxima */
       align-items: stretch;
-    }
-    .buttons-container a {
-      text-decoration: none;
-      white-space: nowrap;
     }
     .button {
       background:#fff;
@@ -59,30 +57,38 @@
       cursor:pointer;
       display:flex;
       align-items:center;
-      justify-content: center;
+      justify-content:center;
       gap:10px;
       transition:background 0.3s;
+      text-decoration:none;
     }
-    .button:hover { background:#ddd }
     .button i { font-size:1.2em }
+    .button:hover { background:#ddd }
 
-    /* Mobile tweaks */
-    @media(max-width:800px) {
+    /* Mobile: full-screen cover */
+    @media (max-width:800px) {
+      .background-video {
+        top: 0; left: 0;
+        transform: none;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+      }
       .buttons-container {
-        top:70%;
-        transform:translate(-50%,-70%);
-        width:90vw;
+        top: 75%;
+        transform: translate(-50%, -75%);
+        width: 90vw;
+        padding: 15px;
       }
       .button {
         font-size:0.9em;
         padding:8px 16px;
       }
     }
-    @media(max-width:480px) {
+    @media (max-width:480px) {
       .buttons-container {
-        top:75%;
-        transform:translate(-50%,-75%);
-        padding:15px;
+        top: 80%;
+        transform: translate(-50%, -80%);
       }
       .button {
         font-size:0.85em;
@@ -93,7 +99,7 @@
 </head>
 <body>
 
-  <!-- Vídeo de fundo (sem loop) -->
+  <!-- Vídeo de fundo -->
   <video id="bgVideo"
          class="background-video"
          autoplay muted playsinline>
@@ -110,7 +116,7 @@
       <i class="fas fa-file-pdf"></i> Conheça nosso Catálogo
     </a>
     <a href="ebook-exercicio.pdf" class="button" download>
-      <i class="fas fa-book"></i> Baixe nosso ebook de exercícios Grátis
+      <i class="fas fa-book"></i> Baixe nosso ebook de exercício Grátis
     </a>
     <a href="https://wa.me/5537999139844" class="button">
       <i class="fab fa-whatsapp" style="color:green"></i> Converse com nosso atendente
@@ -121,7 +127,7 @@
   </div>
 
   <script>
-    // Quando o vídeo termina, pausa no último frame
+    // Congela o vídeo no último frame
     const bgVideo = document.getElementById('bgVideo');
     bgVideo.addEventListener('ended', () => {
       bgVideo.currentTime = bgVideo.duration - 0.1;
